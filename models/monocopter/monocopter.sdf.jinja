@@ -8,20 +8,21 @@
         <pose>0 0 0 0 0 0</pose>
         <mass>1.5</mass>
         <inertia>
-          <ixx>0.197563</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.1458929</iyy>
-          <iyz>0</iyz>
-          <izz>0.1477</izz>
+          <ixx>0.014186812.85</ixx>
+          <ixy>0.00224544875</ixy>
+          <ixz>-0.061034406</ixz>
+          <iyy>0.00108135429</iyy>
+          <iyz>-0.00011539117</iyz>
+          <izz>0.01517241974</izz>
         </inertia>
       </inertial>
       <collision name='base_link_collision'>
         <pose>0 0 -0.07 0 0 0</pose>
         <geometry>
-          <box>
-            <size>0.47 0.47 0.11</size>
-          </box>
+          <cylinder>
+            <length>0.1</length>
+            <radius>0.5</radius>
+          </cylinder>
         </geometry>
         <surface>
           <contact>
@@ -235,8 +236,8 @@
       <cla_stall>-3.85</cla_stall>
       <cda_stall>-0.9233984055</cda_stall>
       <cma_stall>0</cma_stall>
-      <cp>0.0 0.0 0.0</cp>
-      <area>0.6</area>
+      <cp>-0.05 0.0 0.0</cp>
+      <area>0.02</area>
       <air_density>1.2041</air_density>
       <forward>1 0 0</forward>
       <upward>0 0 1</upward>
@@ -249,16 +250,9 @@
       <robotNamespace></robotNamespace>
       <windSubTopic>world_wind</windSubTopic>
     </plugin>
-    <plugin name='dynamics' filename='libgazebo_monocopter_dyanmics_plugin.so'>
-        <linkName>base_link</linkName>
-        <!-- <cp>-0.05 0.45 0.05</cp>
-        <cla>4.752798721</cla>
-        <cda>0.6417112299</cda>
-        <cma>0.0</cma> -->
-        <control_joint_name>
-          left_elevon_joint
-        </control_joint_name>
-        <control_joint_rad_to_cl>-0.3</control_joint_rad_to_cl>
+    <plugin name='dynamics' filename='libgazebo_monocopter_dynamics_plugin.so'>
+      <robotNamespace></robotNamespace>
+      <link_name>base_link</link_name>
     </plugin>
     <plugin name='puller' filename='libgazebo_motor_model.so'>
       <robotNamespace></robotNamespace>

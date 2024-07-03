@@ -80,10 +80,7 @@ void MonocopterDynamicsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _s
   if (_sdf->HasElement("motorNumber"))
     motor_number_ = _sdf->GetElement("motorNumber")->Get<int>();
   else
-    gzerr << "[gazebo_catapult_plugin] Please specify a motorNumber.\n";
-
-  getSdfParam<double>(_sdf, "force", force_magnitude_, force_magnitude_);
-  getSdfParam<double>(_sdf, "duration", launch_duration_, launch_duration_);
+    gzerr << "[gazebo_monocopter_dynamics_plugin] Please specify a motorNumber.\n";
 
   // Listen to the update event. This event is broadcast every simulation iteration.
   _updateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&MonocopterDynamicsPlugin::OnUpdate, this, _1));
@@ -102,7 +99,7 @@ void MonocopterDynamicsPlugin::OnUpdate(const common::UpdateInfo&){
   ///TODO: Compute force induced by aerodynamics
   ignition::math::Vector3d force_aerodynamic;
   total_force = force_motor + force_aerodynamic;
-  this->link_->AddRelativeForce(total_force);
+  // this->link_->AddRelativeForce(total_force);
 
   /// Compute moments
   ignition::math::Vector3d total_torque;
@@ -117,14 +114,16 @@ void MonocopterDynamicsPlugin::OnUpdate(const common::UpdateInfo&){
   /// Get moment of inertia
   ignition::math::Matrix3d I_ = link_->GetInertial()->MOI();
 
-  ignition::math::Vector3d torque_coriolis = -angular_velocity.Cross(I_ * angular_velocity);
+  ignition::math::Vector3d torque_coriolis = angular_velocity.Cross(I_ * angular_velocity);
+  std::cout << "angular velocity: " << angular_velocity.X() << ", " << angular_velocity.Y() << ", " << angular_velocity.Z() << std::endl;
+  std::cout << " - torque_coriolis: " << torque_coriolis.X() << ", " << torque_coriolis.Y() << ", " << torque_coriolis.Z() << std::endl;
 
   ///TODO: Compute motor torque
   ignition::math::Vector3d torque_motor;
   ///TODO: Compute moment induced by aerodynamics
   ignition::math::Vector3d torque_aerodynamic;
 
-  total_torque = torque_coriolis + torque_motor + torque_aerodynamic;
+  total_torque = torque_motor - torque_coriolis;
   this->link_->AddRelativeTorque(total_torque);
 }
 
