@@ -411,6 +411,7 @@ set(plugins
   gazebo_pose_sniffer_plugin
   gazebo_airship_dynamics_plugin
   gazebo_drop_plugin
+  gazebo_monocopter_dynamics_plugin
   )
 
 foreach(plugin ${plugins})
