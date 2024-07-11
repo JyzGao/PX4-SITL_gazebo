@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name='amov_quadx_ndi'>
+    <include>
+      <uri>model://amov_quadx_tt</uri>
+    </include>
+  </model>
+</sdf>

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name='mugin2930_ndi'>
+    <include>
+      <uri>model://mugin2930</uri>
+    </include>
+  </model>
+</sdf>
